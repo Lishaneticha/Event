@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 data class Events(
     val name: String,
     val location: String,
@@ -131,6 +132,8 @@ fun HomeScreen(
     navBack: () -> Unit
 ){
 
+
+
     val listOfEvent = mutableListOf(
         Events(
             name = "Music concert",
@@ -157,6 +160,10 @@ fun HomeScreen(
         )
     }
 
+    var goToDetails by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val context = LocalContext.current
     Scaffold(
         topBar = {
@@ -176,7 +183,7 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = { goToDetails = true }) {
                 Text(text = "create")
             }
         }
@@ -192,6 +199,10 @@ fun HomeScreen(
                 )
             }
         }
+    }
+
+    if (goToDetails) {
+        DetailsScreen(navBack = { goToDetails = false })
     }
 
 
@@ -230,10 +241,47 @@ fun EventCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailsScreen(navBack: () -> Unit) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Details Screen")
+                },
+                navigationIcon = {
+                    IconButton(onClick = navBack) {
+                        Icon(
+                            imageVector = Icons.Rounded.ArrowBack,
+                            contentDescription = ""
+                        )
+                    }
+                }
+            )
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(16.dp)
+        ) {
+            Text(text = "Details content goes here")
+        }
+    }
+}
+
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     EventTheme {
-
+        DetailsScreen()
     }
+}
+
+fun DetailsScreen() {
+    TODO("Not yet implemented")
 }
