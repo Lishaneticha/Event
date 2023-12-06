@@ -1,4 +1,4 @@
-package com.gebeya.event
+package com.gebeya.event.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
