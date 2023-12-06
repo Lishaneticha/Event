@@ -86,6 +86,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 data class Events(
     val name: String,
     val location: String,
@@ -123,7 +124,8 @@ fun Greeting(
 @Composable
 fun HomeScreen(
     navBack: () -> Unit
-){
+) {
+
 
     val listOfEvent = mutableListOf(
         Events(
@@ -131,8 +133,7 @@ fun HomeScreen(
             location = "Addis Ababa",
             date = LocalDate.now(),
             image = R.drawable.placeholder
-        ),
-        Events(
+        ), Events(
             name = "Talent show",
             location = "Adama",
             date = LocalDate.now(),
@@ -140,7 +141,7 @@ fun HomeScreen(
         )
     )
 
-    for (i in 1..1000){
+    for (i in 1..1000) {
         listOfEvent.add(
             Events(
                 name = "Talent show",
@@ -151,44 +152,36 @@ fun HomeScreen(
         )
     }
 
+    var goToDetails by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     val context = LocalContext.current
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.events))
-                },
-                navigationIcon = {
-                    IconButton(onClick = navBack) {
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
-                            contentDescription = ""
-                        )
-                    }
-                }
-            )
-        },
-        floatingActionButton = {
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "create")
+    Scaffold(topBar = {
+        TopAppBar(title = {
+            Text(text = stringResource(id = R.string.events))
+        }, navigationIcon = {
+            IconButton(onClick = navBack) {
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack, contentDescription = ""
+                )
             }
+        })
+    }, floatingActionButton = {
+        Button(onClick = { goToDetails = true }) {
+            Text(text = "create")
         }
-    ) { paddingVal ->
+    }) { paddingVal ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingVal)
-        ){
-            items(listOfEvent){event ->
+            modifier = Modifier.fillMaxSize().padding(paddingVal)
+        ) {
+            items(listOfEvent) { event ->
                 EventCard(
                     name = event.name, date = event.date, image = event.image
                 )
             }
         }
     }
-
-val p = Person(Address("", 1))
-
 }
 
 class Address(val name: String, val streetNum: Int)
@@ -228,10 +221,47 @@ fun EventCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailsScreen(navBack: () -> Unit) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Details Screen")
+                },
+                navigationIcon = {
+                    IconButton(onClick = navBack) {
+                        Icon(
+                            imageVector = Icons.Rounded.ArrowBack,
+                            contentDescription = ""
+                        )
+                    }
+                }
+            )
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(16.dp)
+        ) {
+            Text(text = "Content")
+        }
+    }
+}
+
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     EventTheme {
-
+        DetailsScreen()
     }
+}
+
+fun DetailsScreen() {
+    TODO("Not yet implemented")
 }
