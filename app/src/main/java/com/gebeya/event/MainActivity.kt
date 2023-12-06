@@ -267,7 +267,7 @@ fun DetailsScreen(navBack: () -> Unit) {
                 .padding(it)
                 .padding(16.dp)
         ) {
-            Text(text = "Details content goes here")
+            Text(text = "Content")
         }
     }
 }
