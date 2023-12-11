@@ -27,42 +27,22 @@ import com.gebeya.event.ui.common.EventCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navBack: () -> Unit,
-    navToAddEvent: () -> Unit,
     listOfEvent: List<Events>
 ) {
 
     val context = LocalContext.current
-    Scaffold(topBar = {
-        TopAppBar(title = {
-            Text(text = stringResource(id = R.string.events))
-        }, navigationIcon = {
-            IconButton(onClick = navBack) {
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack, contentDescription = ""
-                )
-            }
-        })
-    }, floatingActionButton = {
-        Button(onClick = navToAddEvent) {
-            Text(text = "create")
-        }
-    }) { paddingVal ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingVal)
-        ) {
-            items(listOfEvent) { event ->
-                EventCard(
-                    name = event.name, date = event.date, image = event.image
-                )
-            }
+
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        items(listOfEvent) { event ->
+            EventCard(
+                name = event.name, date = event.date, image = event.image
+            )
         }
     }
-    HomeChild (
-        navBack = navBack
-    )
 }
 
 @Composable
